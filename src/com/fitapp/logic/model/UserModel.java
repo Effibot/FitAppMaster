@@ -1,29 +1,44 @@
 package com.fitapp.logic.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Observable;
-import java.util.Observer;
+
+import com.fitapp.logic.bean.UserBean;
 
 public class UserModel extends Observable {
+	/**
+	 * This class represents a concrete observable subject. It defines an enum of
+	 * attributes that helps observers of this class to identify which attribute is
+	 * changed.
+	 * 
+	 * @author Andrea Efficace.
+	 */
 
-	private int id;
+	private Integer id;
 	private String name;
 	private String pwd;
 	private String email;
 	private String myPosition;
-	private boolean manager;
+	private Boolean manager;
+
+	public enum ChangedValue {
+		ID, NAME, EMAIL, PWD, MYPOSITION, MANAGER;
+	}
 	
 	
 	
-	public int getId() {
+	public UserModel(UserBean bean) {
+		super();
+		this.addObserver(bean);
+	}
+
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 		setChanged();
-		notifyObservers(id);
+		notifyObservers(ChangedValue.ID);
 	}
 
 	public String getName() {
@@ -33,7 +48,7 @@ public class UserModel extends Observable {
 	public void setName(String name) {
 		this.name = name;
 		setChanged();
-		notifyObservers(name);
+		notifyObservers(ChangedValue.NAME);
 	}
 
 	public String getPwd() {
@@ -42,6 +57,8 @@ public class UserModel extends Observable {
 
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
+		setChanged();
+		notifyObservers(ChangedValue.PWD);
 	}
 
 	public String getEmail() {
@@ -50,6 +67,8 @@ public class UserModel extends Observable {
 
 	public void setEmail(String email) {
 		this.email = email;
+		setChanged();
+		notifyObservers(ChangedValue.EMAIL);
 	}
 
 	public String getMyPosition() {
@@ -58,14 +77,18 @@ public class UserModel extends Observable {
 
 	public void setMyPosition(String position) {
 		this.myPosition = position;
+		setChanged();
+		notifyObservers(ChangedValue.MYPOSITION);
 	}
 
-	public boolean isManager() {
+	public Boolean isManager() {
 		return manager;
 	}
 
-	public void setManager(boolean manager) {
+	public void setManager(Boolean manager) {
 		this.manager = manager;
+		setChanged();
+		notifyObservers(ChangedValue.MANAGER);
 	}
 
 	@Override
